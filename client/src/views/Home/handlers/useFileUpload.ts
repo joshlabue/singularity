@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react'
-import uploadFile from '../api/uploadFile';
+import uploadFileChunks from '../api/uploadFileChunks';
 import FileMetadata from '../types/FileMetadata';
 import {v4 as uuidv4} from 'uuid';
 
@@ -83,7 +83,7 @@ const useFileUpload = () => {
         if(state.pendingFiles.length) {
             if(state.pendingFiles[0].done === false && state.pendingFiles[0].uploading === false) {
                 dispatch({type: 'begin'});
-                uploadFile.uploadFile(state.pendingFiles[0], (progress: number) => {
+                uploadFileChunks.uploadFile(state.pendingFiles[0], (progress: number) => {
                     dispatch({type: 'progress', progress: progress})
                 }, 3000)
                 .then((fileStatus: any) => {

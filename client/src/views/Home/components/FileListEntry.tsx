@@ -21,9 +21,8 @@ const FileListEntry = (props: FileListEntryProps) => {
             </span>
         </span>
         <br/>
-        <span className='compressprogress'>compressing...</span>
-        
-        <br/>
+        {/* <span className='compressprogress'>compressing...</span>
+        <br/> */}
        
         <span className="uuid">
             {
