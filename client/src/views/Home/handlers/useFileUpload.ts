@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from 'react'
-import api from '../api/api';
+import uploadFile from '../api/uploadFile';
 import FileMetadata from '../types/FileMetadata';
+import {v4 as uuidv4} from 'uuid';
 
 enum UploaderStatus {
     IDLE = 'idle',
@@ -32,7 +33,8 @@ const reducer = (state: FileUploaderState, action: any) => {
                     size: file.size,
                     done: false,
                     uploading: false,
-                    handle: file
+                    handle: file,
+                    uuid: uuidv4()
                 });
             }
             return {...state, pendingFiles: [...state.pendingFiles, ...queueAdditions]};
@@ -81,7 +83,7 @@ const useFileUpload = () => {
         if(state.pendingFiles.length) {
             if(state.pendingFiles[0].done === false && state.pendingFiles[0].uploading === false) {
                 dispatch({type: 'begin'});
-                api.uploadFile(state.pendingFiles[0], (progress: number) => {
+                uploadFile.uploadFile(state.pendingFiles[0], (progress: number) => {
                     dispatch({type: 'progress', progress: progress})
                 }, 3000)
                 .then((fileStatus: any) => {

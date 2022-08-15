@@ -2,12 +2,12 @@ import FileMetadata from "../types/FileMetadata";
 import { axios } from "lib/axios"
 import { AxiosRequestConfig } from "axios";
 
-const api= {
+const uploadFile = {
     uploadFile(file: FileMetadata, progressCallback: any, timeout = 500) {
         return new Promise(async (resolve: any) => {
 
             let formData = new FormData();
-            formData.append('name', 'video');
+            formData.append('uuid', file.uuid);
             formData.append('file', file.handle);
 
             let config: AxiosRequestConfig = {
@@ -26,4 +26,4 @@ const api= {
     }
 }
 
-export default api;
+export default uploadFile;

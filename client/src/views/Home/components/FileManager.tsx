@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FilePicker from './FilePicker';
 import FileList from './FileList';
-import FileMetadata from '../types/FileMetadata';
 import useFileUpload from '../handlers/useFileUpload';
 
-const FileManager = () => {
-
-    const [files, setFiles] = useState<FileMetadata[]>([]);
-    // console.log('render filemanager. state: ' + JSON.stringify(files));
-    
+const FileManager = () => {    
     const [uploadState, onChange] = useFileUpload();
 
     return <div className="filemanager">

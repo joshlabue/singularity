@@ -61,10 +61,21 @@ html {
   color: #798080
 }
 
+.compressprogress {
+  margin-left: 10px;
+  color: #798080
+}
+
 .dev {
   margin-top: 2em;
 }
 
 .success {
   color: #158624;
+}
+
+.uuid {
+  margin-left: 10px;
+  color: #798080;
+  font-size: .8em;
 }

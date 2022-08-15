@@ -1,3 +1,4 @@
+import config from '../config.json'
 import React from 'react';
 import FileMetadata from '../types/FileMetadata';
 import sizeToText from '../utils/sizeToText';
@@ -19,8 +20,16 @@ const FileListEntry = (props: FileListEntryProps) => {
                 }
             </span>
         </span>
+        <br/>
+        <span className='compressprogress'>compressing...</span>
         
         <br/>
+       
+        <span className="uuid">
+            {
+                config.devMode ? `uuid: ${props.file.uuid}`:''
+            }
+        </span>
     </div>
 }
 
