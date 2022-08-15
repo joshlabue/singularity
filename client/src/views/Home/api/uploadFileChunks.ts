@@ -28,11 +28,9 @@ const uploadFileChunks = {
                 formData.set('file', currentBlob);
 
                 if(currentChunk+1 === totalChunks) { // if this is the last chunk
-                    formData.set('end', 'true')
+                    formData.set('end', file.filename)
                 }
 
-                // let tmpData = await currentBlob.arrayBuffer();
-                // console.log(tmpData);
                 
                 await axios.post('/FileUpload', formData, axiosConfig)
                 progressCallback(currentChunk * config.chunkSize)
