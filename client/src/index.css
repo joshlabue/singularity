@@ -1,0 +1,62 @@
+body {
+  background-color: #1b1a23;
+  color: #BBCBCB;
+  font-family: "Roboto Mono";
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+html {
+  height: 100%;
+  margin:0;
+}
+
+.header {
+  font-size: 2em;
+}
+
+.controls {
+  margin-top: 2em;
+}
+
+.container-main {
+  /* background-color: red; */
+  /* width: 55rem; */
+  width: 50vw;
+  /* width: 100%; */
+}
+
+.filepicker {
+  border: #BBCBCB 2px solid;
+  border-radius: .25em;
+  width: 20vw;
+  height: 15em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  margin-right: 2em;
+}
+
+.filepicker:hover {
+  background-color: #00000011;
+}
+
+.uploader-target {
+  cursor: inherit;
+  user-select: none;
+}
+
+.filemanager {
+  display: flex;
+  flex-direction: row;
+}
+
+.uploadprogress {
+  margin-left: 10px;
+  color: #798080
+}
