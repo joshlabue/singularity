@@ -1,6 +1,10 @@
 interface FileMetadata {
-    name: string;
+    filename: string;
+    progress: number;
     size: number;
+    done: boolean;
+    uploading: boolean;
+    handle: File;
 }
 
 export default FileMetadata;

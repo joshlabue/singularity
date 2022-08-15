@@ -16,8 +16,6 @@ class Home extends React.Component {
                     config["devMode"] ?
                     <div className='dev'>
                         developer
-                        <br/>
-                        chunk size: {sizeToText(config["chunkSize"])}
                     </div>:
                     <div />
                 }

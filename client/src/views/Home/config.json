@@ -1,4 +1,3 @@
 {
-    "devMode": true,
-    "chunkSize": 10e6
+    "devMode": false
 }

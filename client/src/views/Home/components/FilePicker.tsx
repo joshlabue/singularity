@@ -1,13 +1,10 @@
-import { fireEvent } from '@testing-library/react';
 import React, {useCallback} from 'react';
 import {useDropzone} from 'react-dropzone'
 import FileMetadata from '../types/FileMetadata';
-import readFileAsync from '../utils/readFileAsync';
-import readFileMetadata from '../utils/readFileMetadata';
 
 interface FilePickerProps {
     fileAdd: any;
-    files: FileMetadata[];
+    pending: FileMetadata[];
 }
 
 const FilePicker = (props: FilePickerProps) => {
@@ -15,11 +12,15 @@ const FilePicker = (props: FilePickerProps) => {
     const onDrop = useCallback((acceptedFiles: any) => {
         let newFilePaths: FileMetadata[] = [];
         for(const file of acceptedFiles) {
-            newFilePaths.push(readFileMetadata(file));
+            newFilePaths.push(file);
         };
 
+        console.log('current files: ' + JSON.stringify(props.pending));
+
         console.log('writing to props...')
-        props.fileAdd([...props.files, ...newFilePaths]);
+
+
+        props.fileAdd([...props.pending, ...newFilePaths]);
     }, [props])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
@@ -32,11 +33,6 @@ const FilePicker = (props: FilePickerProps) => {
             <span className="uploader-target">put files here</span>
         }
         
-        {/* {
-            props.files.map(file => {
-                return <div key={file}>{file}</div>
-            })
-        } */}
         </div>
 
         
