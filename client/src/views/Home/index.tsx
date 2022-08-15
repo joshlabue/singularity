@@ -1,5 +1,7 @@
 import React from 'react';
 import FileManager from './components/FileManager';
+import config from './config.json';
+import sizeToText from './utils/sizeToText';
 
 
 class Home extends React.Component {
@@ -10,6 +12,15 @@ class Home extends React.Component {
 
             <div className="controls">
                 <FileManager />
+                {
+                    config["devMode"] ?
+                    <div className='dev'>
+                        developer
+                        <br/>
+                        chunk size: {sizeToText(config["chunkSize"])}
+                    </div>:
+                    <div />
+                }
             </div>
         </div>
     }
