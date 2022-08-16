@@ -1,5 +1,5 @@
 {
-    "devMode": true,
+    "devMode": false,
     "chunkSize": 10e6,
     "devApi": "http://localhost:5159/"
 }
