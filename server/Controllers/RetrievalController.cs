@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace server.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/[controller]")]
 public class RetrievalController : ControllerBase
 {
     [HttpGet]

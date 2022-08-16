@@ -19,7 +19,7 @@ const uploadFile = {
                 }
             }
 
-            axios.post('/FileUpload', formData, config).then(() => {
+            axios.post('/api/FileUpload', formData, config).then(() => {
                 resolve();
             })            
         })

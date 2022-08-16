@@ -20,7 +20,7 @@ const queryFiles = {
             }
 
             
-            axios.get('/Retrieval/Query', config).then((response) => {
+            axios.get('/api/Retrieval/Query', config).then((response) => {
                 resolve(response.data);
             })            
         })
