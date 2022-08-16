@@ -10,7 +10,7 @@ const FileManager = () => {
         <FilePicker pending={uploadState.pendingFiles} fileAdd={(newFiles: any) => {
             onChange(newFiles);
         }}/>
-        <FileList pending={uploadState.pendingFiles} uploaded={uploadState.doneFiles} />
+        <FileList pending={uploadState.pendingFiles} uploaded={uploadState.uploadedFiles} />
     </div>
 }
 

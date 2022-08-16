@@ -29,6 +29,7 @@ class FFmpeg {
 
         if(process.ExitCode == 0) {
             status.state = "encoded";
+            status.size = (int) new System.IO.FileInfo(output).Length;
         }
         else {
             status.state = "error";

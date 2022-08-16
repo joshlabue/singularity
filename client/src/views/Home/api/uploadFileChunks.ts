@@ -34,12 +34,12 @@ const uploadFileChunks = {
                 
                 await axios.post('/FileUpload', formData, axiosConfig)
                 progressCallback(currentChunk * config.chunkSize)
-                console.log(`finished chunk ${currentChunk+1} of ${totalChunks}`)
+                // console.log(`finished chunk ${currentChunk+1} of ${totalChunks}`)
             }
 
             progressCallback(file.size);
 
-            console.log('done uploading file');
+            // console.log('done uploading file');
 
             resolve();           
         })

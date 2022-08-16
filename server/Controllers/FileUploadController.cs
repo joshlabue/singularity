@@ -37,6 +37,7 @@ public class FileUploadController : ControllerBase
 
             FileStatus status = StatusWriter.InitStatus();
             status.state = "uploading";
+            status.uuid = chunk.uuid;
             StatusWriter.WriteStatus(status, chunk.uuid);
 
             // write the first chunk to the file

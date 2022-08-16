@@ -6,7 +6,9 @@ class StatusWriter
     {
         FileStatus status = new FileStatus();
         status.state = "uninitialized";
+        status.uuid = "";
         status.filename = "";
+        status.size = -1;
         return status;
     }
 

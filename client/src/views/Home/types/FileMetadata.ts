@@ -1,3 +1,5 @@
+import BackendStatus from "./BackendStatus";
+
 interface FileMetadata {
     filename: string;
     progress: number;
@@ -6,6 +8,7 @@ interface FileMetadata {
     uploading: boolean;
     handle: File;
     uuid: string;
+    backendStatus?: BackendStatus;
 }
 
 export default FileMetadata;

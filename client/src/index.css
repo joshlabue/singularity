@@ -74,8 +74,17 @@ html {
   color: #158624;
 }
 
+.danger {
+  color: #ca0c0c;
+}
+
 .uuid {
   margin-left: 10px;
   color: #798080;
   font-size: .8em;
+}
+
+.download {
+  color: #0283ce;
+  cursor: pointer;
 }
