@@ -6,7 +6,9 @@ class FFmpeg {
     {
         string path = "/tmp/singularity/" + uuid + "/original";
         string output = "/tmp/singularity/" + uuid + "/output.mp4";
-        string command = $"ffmpeg -i {path} -vcodec libx264 -crf 32 {output} -loglevel quiet";
+        string log = "/tmp/singularity/" + uuid + "/ffmpeg.log";
+        string reportConfig = $"FFREPORT=file=\"{log}\":level=32";
+        string command = $"{reportConfig} ffmpeg -i {path} -vcodec libx264 -crf 32 {output} -loglevel quiet";
 
         FileStatus status = StatusWriter.LoadStatus(uuid);
         status.state = "encoding";
