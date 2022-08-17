@@ -22,8 +22,5 @@ Upload big video files, let it spit them back at you, compressed down.
 - The app will be accessible at [localhost:5000](http://localhost:5000)
   
 ## Roadmap
-- Fix encode crashes on larger mp4 files
-- Add progress indicator to encoder status
-- Improve FFmpeg logging on server side, and add visibility on client side
 - Allow retries on failed encodings
 - Make the encoder's CRF settable from the client

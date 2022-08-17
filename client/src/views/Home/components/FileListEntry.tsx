@@ -13,17 +13,25 @@ const FileListEntry = (props: FileListEntryProps) => {
 
     let backendRow: any = '';
 
-    switch(props.file.backendStatus?.status) {
-        case 'encoded':
-            backendRow = <span><DownloadButton file={props.file}/> {sizeToText(props.file.backendStatus.size)}</span>
-            break;
-        case 'error':
-            backendRow = <span className='danger'>error</span>
-            break;
-        default:
-            backendRow = 'encoding...'
-    }
+    let currentFrame = props.file.backendStatus?.currentFrame;
+    if(currentFrame == 0 || currentFrame == undefined) currentFrame = 0;
 
+    let frameCount = props.file.backendStatus?.frameCount;
+    if(frameCount == 0 || frameCount == undefined) frameCount = 1;
+
+    if(props.uploaded) {
+        switch(props.file.backendStatus?.status) {
+            case 'encoded':
+                backendRow = <span><DownloadButton file={props.file}/> {sizeToText(props.file.backendStatus.size)}</span>
+                break;
+            case 'error':
+                backendRow = <span className='danger'>error</span>
+                break;
+            default:
+                backendRow = `encoding (${Math.round((currentFrame / frameCount) * 100)}%)`
+        }
+    }
+    
     return <div key={props.file.filename}>
         <span>{props.file.filename}</span>
         <br />

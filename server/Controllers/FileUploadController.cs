@@ -64,12 +64,15 @@ public class FileUploadController : ControllerBase
             // start encoding
 
             var combineAndEncodeTask = new Task<Task>(async () => {
-                Console.WriteLine("Starting reassembly on " + chunk.uuid);
+                // Console.WriteLine("Starting reassembly on " + chunk.uuid);
                 await ChunkWriter.CombineChunks(chunk.uuid);
-                Console.WriteLine("Finished reassembly on " + chunk.uuid);
-                Console.WriteLine("Starting encoding for " + chunk.uuid);
+                // Console.WriteLine("Finished reassembly on " + chunk.uuid);
+                // Console.WriteLine("Getting frame count for " + chunk.uuid);
+                await FFmpeg.LoadFrameCount(chunk.uuid);
+                // Console.WriteLine("Finished getting frame count for " + chunk.uuid);
+                // Console.WriteLine("Starting encoding for " + chunk.uuid);
                 await FFmpeg.Encode(chunk.uuid);
-                Console.WriteLine("Encoding finished for " + chunk.uuid);
+                // Console.WriteLine("Encoding finished for " + chunk.uuid);
             });
 
             combineAndEncodeTask.Start();

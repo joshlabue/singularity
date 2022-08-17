@@ -75,7 +75,12 @@ const reducer = (state: FileUploaderState, action: any) => {
                 let foundBackend = false;
                 for(const backendResult of action.query) {
                     if(file.uuid === backendResult.uuid) {
-                        uploadedFiles.push({...file, backendStatus: {status: backendResult.state, size: backendResult.size}});
+                        uploadedFiles.push({...file, backendStatus: {
+                            status: backendResult.state,
+                            size: backendResult.size,
+                            frameCount: backendResult.frameCount,
+                            currentFrame: backendResult.currentFrame
+                        }});
                         foundBackend = true;
                     }
                 }

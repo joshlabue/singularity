@@ -5,5 +5,7 @@ class FileStatus
     public string filename { get; set; }
     public int size { get; set; }
     public int numChunks { get; set; }
+    public uint frameCount { get; set; }
+    public uint currentFrame { get; set; }
 
 }
