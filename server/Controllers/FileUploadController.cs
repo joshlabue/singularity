@@ -32,32 +32,25 @@ public class FileUploadController : ControllerBase
         chunk.uuid = this.Request.Form["uuid"];
         chunk.chunk = Int32.Parse(this.Request.Form["chunk"]);
 
+        int totalChunks = Int32.Parse(this.Request.Form["total"]);
+
         if(chunk.chunk == 0) {
             Directory.CreateDirectory("/tmp/singularity/" + chunk.uuid);
 
             FileStatus status = StatusWriter.InitStatus();
             status.state = "uploading";
             status.uuid = chunk.uuid;
+            status.numChunks = totalChunks;
             StatusWriter.WriteStatus(status, chunk.uuid);
 
             // write the first chunk to the file
-            using (var stream = new FileStream("/tmp/singularity/" + chunk.uuid + "/original", FileMode.Create))
-            {
-                file.CopyTo(stream);
-
-                stream.Flush();
-            }
+            ChunkWriter.WriteChunk(chunk.uuid, chunk.chunk, file);
         }
 
         // append chunk to file
-        using (var stream = new FileStream("/tmp/singularity/" + chunk.uuid + "/original", FileMode.Append))
-        {
-            file.CopyTo(stream);
+        ChunkWriter.WriteChunk(chunk.uuid, chunk.chunk, file);
 
-            stream.Flush();
-        }
-
-        Console.WriteLine("Received chunk " + chunk.chunk + " of " + chunk.uuid);
+        Console.WriteLine($"Received chunk {chunk.chunk} ({chunk.chunk+1}/{totalChunks}) {chunk.uuid}");
 
         if (this.Request.Form.ContainsKey("end"))
         {
@@ -70,14 +63,17 @@ public class FileUploadController : ControllerBase
 
             // start encoding
 
-            var encodeTask = new Task<Task>(async () => {
+            var combineAndEncodeTask = new Task<Task>(async () => {
+                Console.WriteLine("Starting reassembly on " + chunk.uuid);
+                await ChunkWriter.CombineChunks(chunk.uuid);
+                Console.WriteLine("Finished reassembly on " + chunk.uuid);
                 Console.WriteLine("Starting encoding for " + chunk.uuid);
                 await FFmpeg.Encode(chunk.uuid);
                 Console.WriteLine("Encoding finished for " + chunk.uuid);
             });
 
-            encodeTask.Start();
-            encodeTask.Wait();
+            combineAndEncodeTask.Start();
+            combineAndEncodeTask.Wait();
         }
 
         return Ok();

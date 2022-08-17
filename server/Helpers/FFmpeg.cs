@@ -4,7 +4,7 @@ using System.Diagnostics;
 class FFmpeg {
     public static async Task Encode(string uuid, int crf = 32) 
     {
-        string path = "/tmp/singularity/" + uuid + "/original";
+        string path = "/tmp/singularity/" + uuid + "/combined";
         string output = "/tmp/singularity/" + uuid + "/output.mp4";
         string log = "/tmp/singularity/" + uuid + "/ffmpeg.log";
         string reportConfig = $"FFREPORT=file=\"{log}\":level=32";

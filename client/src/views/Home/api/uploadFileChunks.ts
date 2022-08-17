@@ -20,10 +20,16 @@ const uploadFileChunks = {
             let formData = new FormData();
 
             formData.append('uuid', file.uuid);
+            
            
             const totalChunks = Math.ceil(file.size / config.chunkSize)
+
+            formData.append('total', totalChunks.toString());
+
             for(currentChunk = 0; currentChunk < totalChunks; currentChunk++) {
-                currentBlob = file.handle.slice(currentChunk, chunkOffset + config.chunkSize);
+                const startAddress = currentChunk * config.chunkSize;
+                const endAddress = startAddress + config.chunkSize;
+                currentBlob = file.handle.slice(startAddress, endAddress);
                 formData.set('chunk', currentChunk.toString());
                 formData.set('file', currentBlob);
 

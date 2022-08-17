@@ -4,5 +4,6 @@ class FileStatus
     public string uuid { get; set; }
     public string filename { get; set; }
     public int size { get; set; }
+    public int numChunks { get; set; }
 
 }
