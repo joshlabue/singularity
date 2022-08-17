@@ -20,7 +20,4 @@ Upload big video files, let it spit them back at you, compressed down.
 - In the root folder, run `docker build -t singularity .`
 - Start the container with `docker run -p 5000:5000 -d singularity:latest`
 - The app will be accessible at [localhost:5000](http://localhost:5000)
-  
-## Roadmap
-- Allow retries on failed encodings
-- Make the encoder's CRF settable from the client
+
