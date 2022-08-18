@@ -2,7 +2,7 @@
     "name": "singularity",
     "scripts": {
         "build": "yarn build-client && yarn build-server",
-        "build-client": "cd client && yarn build && cp build/* -r ../server/wwwroot/",
+        "build-client": "cd client && yarn install && yarn build && cp build/* -r ../server/wwwroot/",
         "build-server": "cd server && dotnet build",
         "start": "cd server && dotnet run",
         "build-prod": "yarn build-client && yarn build-server && cd server && dotnet publish -o ../build"

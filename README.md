@@ -16,8 +16,12 @@ Upload big video files, let it spit them back at you, compressed down.
 - To start the server, cd into  `build` and run `server`
 - The server will be up at [localhost:5000](http://localhost:5000)
 ### Docker
+- Install the following dependencies:
+  - Docker
+  - Yarn
 - Clone this repo
-- In the root folder, run `docker build -t singularity .`
+- In the root folder, run `yarn build-client`
+- In the same folder, run `docker build -t singularity .`
 - Start the container with `docker run -p 5000:5000 -d singularity:latest`
 - The app will be accessible at [localhost:5000](http://localhost:5000)
 
