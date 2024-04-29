@@ -71,21 +71,21 @@ const reducer = (state: FileUploaderState, action: any) => {
 
             let uploadedFiles: FileMetadata[] = [];
 
-            for(const file of state.uploadedFiles) {
+            for(const uploadedFile of state.uploadedFiles) {
                 let foundBackend = false;
                 for(const backendResult of action.query) {
-                    if(file.uuid === backendResult.uuid) {
-                        uploadedFiles.push({...file, backendStatus: {
-                            status: backendResult.state,
-                            size: backendResult.size,
-                            frameCount: backendResult.frameCount,
-                            currentFrame: backendResult.currentFrame
+                    if(uploadedFile.uuid === backendResult.Uuid) {
+                        uploadedFiles.push({...uploadedFile, backendStatus: {
+                            status: backendResult.State,
+                            size: backendResult.Size,
+                            frameCount: backendResult.FrameCount,
+                            currentFrame: backendResult.CurrentFrame
                         }});
                         foundBackend = true;
                     }
                 }
                 if(foundBackend == false) {
-                    uploadedFiles.push({...file})
+                    uploadedFiles.push({...uploadedFile})
                 }
             }
 

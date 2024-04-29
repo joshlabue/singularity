@@ -8,7 +8,11 @@ const downloadFile = {
                 const url = window.URL.createObjectURL(new Blob([response.data]))
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', file.filename);
+                // set the file extension to mp4, since FFmpeg always converts to mp4
+                let filename = file.filename.split('.')[0];
+                filename += '.mp4';
+
+                link.setAttribute('download', filename);
                 document.body.appendChild(link);
                 link.click();
 

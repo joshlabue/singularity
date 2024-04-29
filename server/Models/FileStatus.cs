@@ -1,11 +1,10 @@
-class FileStatus 
-{
-    public string state { get; set; }
-    public string uuid { get; set; }
-    public string filename { get; set; }
-    public int size { get; set; }
-    public int numChunks { get; set; }
-    public uint frameCount { get; set; }
-    public uint currentFrame { get; set; }
+namespace server.Models;
 
-}
+public record struct FileStatus(
+    string State,
+    string Uuid,
+    string Filename,
+    long Size,
+    int NumChunks,
+    uint FrameCount,
+    uint CurrentFrame);

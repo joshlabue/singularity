@@ -1,5 +1,3 @@
-class UploadChunk
-{
-    public string uuid { get; set; }
-    public int chunk { get; set; }
-}
+namespace server.Models;
+
+public record struct UploadChunk(string Uuid, int Chunk);

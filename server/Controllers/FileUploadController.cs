@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using server.Helpers;
+using server.Models;
 
 namespace server.Controllers;
 
@@ -6,73 +8,46 @@ namespace server.Controllers;
 [Route("/api/[controller]")]
 public class FileUploadController : ControllerBase
 {
-    [HttpGet(Name = "FileUpload")]
-    public string Get()
-    {
-        Console.WriteLine("GET on /FileUpload");
-        var t = new Task<Task>(async () => {
-            await Task.Delay(1000);
-            Console.WriteLine("Task run");
-        });
-
-        t.Start();
-        t.Wait();
-        return "ok";
-    }
-
-
-    // allow multipart form data
-    
-
     [HttpPost(Name = "FileUpload")]
-
     public IActionResult Post(IFormFile file)
     {      
         UploadChunk chunk = new UploadChunk();
-        chunk.uuid = this.Request.Form["uuid"];
-        chunk.chunk = Int32.Parse(this.Request.Form["chunk"]);
+        chunk.Uuid = Request.Form["uuid"];
+        chunk.Chunk = Int32.Parse(Request.Form["chunk"]);
 
-        int totalChunks = Int32.Parse(this.Request.Form["total"]);
+        int totalChunks = Int32.Parse(Request.Form["total"]);
 
-        if(chunk.chunk == 0) {
-            Directory.CreateDirectory("/tmp/singularity/" + chunk.uuid);
+        if(chunk.Chunk == 0) {
+            Directory.CreateDirectory("/tmp/singularity/" + chunk.Uuid);
 
             FileStatus status = StatusWriter.InitStatus();
-            status.state = "uploading";
-            status.uuid = chunk.uuid;
-            status.numChunks = totalChunks;
-            StatusWriter.WriteStatus(status, chunk.uuid);
+            status.State = "uploading";
+            status.Uuid = chunk.Uuid;
+            status.NumChunks = totalChunks;
+            StatusWriter.WriteStatus(status, chunk.Uuid);
 
             // write the first chunk to the file
-            ChunkWriter.WriteChunk(chunk.uuid, chunk.chunk, file);
+            ChunkWriter.WriteChunk(chunk.Uuid, chunk.Chunk, file);
         }
 
         // append chunk to file
-        ChunkWriter.WriteChunk(chunk.uuid, chunk.chunk, file);
+        ChunkWriter.WriteChunk(chunk.Uuid, chunk.Chunk, file);
 
-        Console.WriteLine($"Received chunk {chunk.chunk} ({chunk.chunk+1}/{totalChunks}) {chunk.uuid}");
+        Console.WriteLine($"Received chunk {chunk.Chunk} ({chunk.Chunk+1}/{totalChunks}) {chunk.Uuid}");
 
-        if (this.Request.Form.ContainsKey("end"))
+        if (Request.Form.ContainsKey("end"))
         {
             Console.WriteLine("end of upload");
 
-            FileStatus status = StatusWriter.LoadStatus(chunk.uuid);
-            status.state = "uploaded";
-            status.filename = this.Request.Form["end"];
-            StatusWriter.WriteStatus(status, chunk.uuid);
+            FileStatus status = StatusWriter.LoadStatus(chunk.Uuid);
+            status.State = "uploaded";
+            status.Filename = Request.Form["end"];
+            StatusWriter.WriteStatus(status, chunk.Uuid);
 
-            // start encoding
-
-            var combineAndEncodeTask = new Task<Task>(async () => {
-                // Console.WriteLine("Starting reassembly on " + chunk.uuid);
-                await ChunkWriter.CombineChunks(chunk.uuid);
-                // Console.WriteLine("Finished reassembly on " + chunk.uuid);
-                // Console.WriteLine("Getting frame count for " + chunk.uuid);
-                await FFmpeg.LoadFrameCount(chunk.uuid);
-                // Console.WriteLine("Finished getting frame count for " + chunk.uuid);
-                // Console.WriteLine("Starting encoding for " + chunk.uuid);
-                await FFmpeg.Encode(chunk.uuid);
-                // Console.WriteLine("Encoding finished for " + chunk.uuid);
+            Task<Task> combineAndEncodeTask = new(async () => {
+                await ChunkWriter.CombineChunks(chunk.Uuid);
+                Transcoder.LoadFrameCount(chunk.Uuid);
+                await Transcoder.Encode(chunk.Uuid);
             });
 
             combineAndEncodeTask.Start();

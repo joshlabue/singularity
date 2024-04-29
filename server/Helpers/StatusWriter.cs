@@ -1,14 +1,15 @@
 using System.Text.Json;
+using server.Models;
 
 class StatusWriter
 {
     public static FileStatus InitStatus()
     {
         FileStatus status = new FileStatus();
-        status.state = "uninitialized";
-        status.uuid = "";
-        status.filename = "";
-        status.size = -1;
+        status.State = "uninitialized";
+        status.Uuid = "";
+        status.Filename = "";
+        status.Size = -1;
         return status;
     }
 
@@ -16,17 +17,17 @@ class StatusWriter
     {
         string path = "/tmp/singularity/" + uuid + "/status.json";
         string json = JsonSerializer.Serialize(status);
-        System.IO.File.WriteAllText(path, json);
+        File.WriteAllText(path, json);
     }
 
     public static FileStatus LoadStatus(string uuid)
     {
         string path = "/tmp/singularity/" + uuid + "/status.json";
-        string json = System.IO.File.ReadAllText(path);
+        string json = File.ReadAllText(path);
 
         FileStatus status;
 
-        if(json == "" || json == null)
+        if(String.IsNullOrEmpty(json))
         {
             status = InitStatus();
         }

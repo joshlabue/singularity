@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using server.Models;
 
 
 namespace server.Controllers;
@@ -8,25 +9,10 @@ namespace server.Controllers;
 [Route("/api/[controller]")]
 public class RetrievalController : ControllerBase
 {
-    [HttpGet]
-    public string Index()
-    {
-        Console.WriteLine("GET on /Retrieval");
-
-        // if path is /Retrieval/Query
-        if(this.Request.Path.Value[1].Equals("Query"))
-        {
-            Console.WriteLine("Query");
-        }
-
-        return "ok";
-    }
-
-    // http GET on /Retrieval/Test
     [HttpGet("Query")]
     public string Query()
     {
-        string query = this.Request.Query["uuids"];
+        string query = Request.Query["uuids"];
         string[] uuids = query.Split(',');
         
         List<FileStatus> statuses = new List<FileStatus>();
@@ -44,11 +30,10 @@ public class RetrievalController : ControllerBase
     [HttpGet("Download/{uuid}")]
     public FileResult Download()
     {
-        string uuid = this.Request.RouteValues["uuid"]!.ToString()!;
+        string uuid = Request.RouteValues["uuid"]!.ToString()!;
         
         string path = "/tmp/singularity/" + uuid + "/output.mp4";
 
         return PhysicalFile(path, "video/mp4");
     }
-
 }

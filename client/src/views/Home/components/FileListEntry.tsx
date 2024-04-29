@@ -28,7 +28,7 @@ const FileListEntry = (props: FileListEntryProps) => {
                 backendRow = <span className='danger'>error</span>
                 break;
             default:
-                backendRow = `encoding (${Math.round((currentFrame / frameCount) * 100)}%)`
+                backendRow = `transcoding (${Math.round((currentFrame / frameCount) * 100)}%)`
         }
     }
     
